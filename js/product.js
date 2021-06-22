@@ -3,13 +3,14 @@ import pagination from './pagination.js'
 import productModalCom from './productModal.js'
 import delModalCom from './delModal.js'
 
+const url = "https://vue3-course-api.hexschool.io"
+const path = "uy_neish"
+
 let productModal = {}
 let delProductModal = {}
 const app = createApp({
   data() {
     return {
-      url: `https://vue3-course-api.hexschool.io`,
-      path: `uy_neish`,
       products: [],
       content: '',
       image: '',
@@ -27,7 +28,7 @@ const app = createApp({
       axios.defaults.headers.common['Authorization'] = token
     },
     getProduct (page = 1) {
-      axios.get(`${this.url}/api/${this.path}/admin/products?page=${page}`)
+      axios.get(`${url}/api/${path}/admin/products?page=${page}`)
         .then(res => {
           console.log(res.data)
           if (res.data.success) {
@@ -47,11 +48,11 @@ const app = createApp({
       productModal.show()
     },
     updateProduct (tempProduct) {
-      let updateUrl = `${this.url}/api/${this.path}/admin/product`
+      let updateUrl = `${url}/api/${path}/admin/product`
       let method = 'post'
       if(!this.isNew){
         method = 'put'
-        updateUrl = `${this.url}/api/${this.path}/admin/product/${tempProduct.id}`
+        updateUrl = `${url}/api/${path}/admin/product/${tempProduct.id}`
       }
       tempProduct.origin_price = parseInt(tempProduct.origin_price)
       tempProduct.price = parseInt(tempProduct.price)
@@ -71,7 +72,7 @@ const app = createApp({
       this.tempProduct = {...item}
     },
     delProduct () {
-      axios.delete(`${this.url}/api/${this.path}/admin/product/${this.tempProduct.id}`)
+      axios.delete(`${url}/api/${this.path}/admin/product/${this.tempProduct.id}`)
         .then(res => {
           if(res.data.success) {
             this.getProduct()

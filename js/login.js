@@ -1,8 +1,9 @@
+const url = "https://vue3-course-api.hexschool.io"
+const path = "uy_neish"
+
 const app = Vue.createApp({
   data() {
     return {
-        url: `https://vue3-course-api.hexschool.io`,
-        path: `uy_neish`,
         userprofile: {
         username: '',
         password: ''
@@ -11,14 +12,14 @@ const app = Vue.createApp({
   },
   methods: {
     login () {
-      axios.post(`${this.url}/admin/signin`, this.userprofile)
+      axios.post(`${url}/admin/signin`, this.userprofile)
         .then(res => {
             if(res.data.success === true) {
             const { token, expired } = res.data
             document.cookie = `myToken = ${token}; expires = ${new Date(expired)}`
             this.init()
             console.log('hi')
-            axios.post(`${this.url}/api/user/check`)
+            axios.post(`${url}/api/user/check`)
                 .then(res => console.log(res))
                 .catch(err => console.log(err))
             window.location = `product.html`
